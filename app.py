@@ -6,7 +6,7 @@ import requests
 app = Flask(__name__)
 
 service_name = "configuration_core_service"
-service_ip = "192.168.1.121"
+service_ip = "34.141.19.56:5000"
 
 microservices = [{"name":"database_core_service", "ip":"34.96.72.77"},{"name":"ecostreet_core_service", "ip": "34.120.106.247"}]
 
