@@ -37,7 +37,7 @@ def update():
             for ms in microservices:
                 url = 'http://' + ms["ip"] + '/config'
                 response = requests.post(url, data=ms)
-        return str(request.environ.get('HTTP_X_REAL_IP', request.remote_addr))
+        return "200 OK"
     except Exception as err:
         return err
     
@@ -60,5 +60,5 @@ def get_config():
     global service_ip
     global service_name
     global microservices
-    return str([service_name, service_ip])
+    return str([service_name, service_ip, microservices])
 
