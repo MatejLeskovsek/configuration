@@ -69,24 +69,25 @@ def get_config():
     print("/getconfig accessed")
     return str([service_name, service_ip, microservices])
 
-# HEALTH CHECK
-@app.route("/health")
+# METRICS FUNCTION
+@app.route("/metrics")
 def get_health():
-    print("/health accessed")
+    print("/metrics accessed")
     start = datetime.datetime.now()
     for ms in microservices:
         try:
             url = 'http://' + ms["ip"] + '/config'
             response = requests.get(url)
         except Exception as err:
-            return "HEALTH CHECK FAIL:" + ms["name"] + " unavailable"
+            return "METRIC CHECK FAIL:" + ms["name"] + " unavailable"
     end = datetime.datetime.now()
     
     delta = end-start
     crt = delta.total_seconds() * 1000
-    health = {"health check": "successful", "microservices response time (ms)": crt}
+    health = {"metric check": "successful", "microservices response time (ms)": crt}
     return str(health)
 
+# HEALTH CHECK
 @app.route("/healthcheck")
 def send_health():
     print("/healthcheck accessed")
