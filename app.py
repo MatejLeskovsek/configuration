@@ -22,6 +22,7 @@ def update():
     global microservices
     global service_ip
     global service_name
+    print("/update accessed")
     try:
         microservice = request.form["name"]
         ms_ip = request.form["ip"]
@@ -49,6 +50,7 @@ def config_update():
     global service_ip
     global microservices
     global service_name
+    print("/configupdate accessed")
     service_ip = request.form["ip"]
     try:
         for ms in microservices:
@@ -64,11 +66,13 @@ def get_config():
     global service_ip
     global service_name
     global microservices
+    print("/getconfig accessed")
     return str([service_name, service_ip, microservices])
 
 # HEALTH CHECK
 @app.route("/health")
 def get_health():
+    print("/health accessed")
     start = datetime.datetime.now()
     for ms in microservices:
         try:
@@ -85,4 +89,5 @@ def get_health():
 
 @app.route("/healthcheck")
 def send_health():
+    print("/healthcheck accessed")
     return "200 OK"
