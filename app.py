@@ -49,7 +49,7 @@ def config_update():
     service_ip = request.form["ip"]
     try:
         for ms in microservices:
-            url = ms["ip"] + '/config'
+            url = 'http://' + ms["ip"] + '/config'
             response = requests.post(url, data=request.form)
         return response.text
     except Exception as err:
