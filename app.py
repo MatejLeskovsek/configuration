@@ -82,7 +82,7 @@ def get_health():
             return "HEALTH CHECK FAIL:" + ms["name"] + " unavailable"
     end = datetime.datetime.now()
     
-    delta = start-end
+    delta = end-start
     crt = delta.total_seconds() * 1000
     health = {"health check": "successful", "microservices response time (ms)": crt}
     return str(health)
