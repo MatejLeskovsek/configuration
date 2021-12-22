@@ -16,7 +16,9 @@ def hello_world():
     
 @app.route('/update', methods = ['POST'])
 def update():
-    # connect to mongodb and authenticate user, return token
+    global microservices
+    global service_ip
+    global service_name
     try:
         microservice = request.form["name"]
         ms_ip = request.form["ip"]
@@ -41,14 +43,22 @@ def update():
     
 @app.route('/configupdate', methods = ['POST'])
 def config_update():
+    global service_ip
+    global microservices
+    global service_name
     service_ip = request.form["ip"]
-    #for ms in microservices:
-    #    url = ms["ip"] + '/config'
-    #    response = requests.post(url, data=request.form)
     try:
-        url = 'http://34.159.194.58:5000/config'
-        response = requests.post(url, data=request.form)
+        for ms in microservices:
+            url = ms["ip"] + '/config'
+            response = requests.post(url, data=request.form)
         return response.text
     except Exception as err:
         return err
+    
+@app.route("/getconfig")
+def get_config():
+    global service_ip
+    global service_name
+    global microservices
+    return str([service_name, service_ip])
 
