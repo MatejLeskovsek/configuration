@@ -35,7 +35,7 @@ def update():
             for ms in microservices:
                 url = 'http://' + ms["ip"] + '/config'
                 response = requests.post(url, data=ms)
-        return request.remote_addr
+        return str(request.remote_addr)
     except Exception as err:
         return err
     
@@ -45,7 +45,10 @@ def config_update():
     #for ms in microservices:
     #    url = ms["ip"] + '/config'
     #    response = requests.post(url, data=request.form)
-    url = 'http://34.120.106.247/config'
-    response = requests.post(url, data=request.form)
-    return 200
+    try:
+        url = 'http://34.159.194.58:5000/config'
+        response = requests.post(url, data=request.form)
+        return response.text
+    except Exception as err:
+        return err
 
