@@ -42,8 +42,10 @@ def update():
 @app.route('/configupdate', methods = ['POST'])
 def config_update():
     service_ip = request.form["ip"]
-    for ms in microservices:
-        url = ms["ip"] + '/config'
-        response = requests.post(url, data=request.form)
+    #for ms in microservices:
+    #    url = ms["ip"] + '/config'
+    #    response = requests.post(url, data=request.form)
+    url = 'http://34.120.106.247/config'
+    response = requests.post(url, data=request.form)
     return 200
 
