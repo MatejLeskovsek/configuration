@@ -30,7 +30,7 @@ def update():
                 ms["ip"] = ms_ip
                 ms_old = ms
                 change = True
-        # send info to other microservices about ip change
+        # send info to other microservices about ip change 
         if change:
             for ms in microservices:
                 url = 'http://' + ms["ip"] + '/config'
