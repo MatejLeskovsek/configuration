@@ -81,7 +81,7 @@ def get_health():
     delta = start-end
     crt = delta.total_seconds() * 1000
     health = {"health check": "successful", "microservices response time (ms)": crt}
-    return "HEALTH CHECK SUCCESSFUL"
+    return str(health)
 
 @app.route("/healthcheck")
 def send_health():
