@@ -15,7 +15,7 @@ microservices = [{"name":"database_core_service", "ip":"34.159.211.186:5000"},{"
 def hello_world():
     return "Configuration server microservice."
 
-# FUNCTION TO UPDATE MS IP AND SEND NEW CONFIG TO OTHER MS  
+# FUNCTION TO UPDATE MS IP AND SEND NEW CONFIG TO OTHER MS
 @app.route('/update', methods = ['POST'])
 def update():
     global microservices
