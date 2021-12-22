@@ -2,6 +2,7 @@ from flask import Flask
 from flask import request
 import pymongo
 import requests
+import datetime
 
 app = Flask(__name__)
 
@@ -65,3 +66,23 @@ def get_config():
     global microservices
     return str([service_name, service_ip, microservices])
 
+# HEALTH CHECK
+@app.route("/health")
+def get_health():
+    start = datetime.datetime.now()
+    for ms in microservices:
+        try:
+            url = 'http://' + ms["ip"] + '/config'
+            response = requests.get(url)
+        except Exception as err:
+            return "HEALTH CHECK FAIL:" + ms["name"] + " unavailable"
+    end = datetime.datetime.now()
+    
+    delta = start-end
+    crt = delta.total_seconds() * 1000
+    health = {"health check": "successful", "microservices response time (ms)": crt}
+    return "HEALTH CHECK SUCCESSFUL"
+
+@app.route("/healthcheck")
+def send_health():
+    return "200 OK"
