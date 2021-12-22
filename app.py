@@ -10,10 +10,12 @@ service_ip = "34.141.19.56:5000"
 
 microservices = [{"name":"database_core_service", "ip":"34.159.211.186:5000"},{"name":"ecostreet_core_service", "ip": "34.159.194.58:5000"}]
 
+# HOME PAGE
 @app.route("/")
 def hello_world():
     return "Configuration server microservice."
-    
+
+# FUNCTION TO UPDATE MS IP AND SEND NEW CONFIG TO OTHER MS  
 @app.route('/update', methods = ['POST'])
 def update():
     global microservices
@@ -32,7 +34,6 @@ def update():
                 ms["ip"] = ms_ip
                 ms_old = ms
                 change = True
-        # send info to other microservices about ip change  
         if change:
             for ms in microservices:
                 url = 'http://' + ms["ip"] + '/config'
@@ -40,7 +41,8 @@ def update():
         return "200 OK"
     except Exception as err:
         return err
-    
+
+# FUNCTION TO UPDATE CONFIGURATION MS 
 @app.route('/configupdate', methods = ['POST'])
 def config_update():
     global service_ip
@@ -54,7 +56,8 @@ def config_update():
         return response.text
     except Exception as err:
         return err
-    
+
+# FUNCTION TO GET CURRENT CONFIG
 @app.route("/getconfig")
 def get_config():
     global service_ip
