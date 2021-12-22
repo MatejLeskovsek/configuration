@@ -43,7 +43,7 @@ def update():
 def config_update():
     service_ip = request.form["ip"]
     for ms in microservices:
-        url = 'http://' + ms["ip"] + '/config'
-        response = requests.post(url, data={"name": service_name, "ip": service_ip})
+        url = ms["ip"] + '/config'
+        response = requests.post(url, data=request.form)
     return 200
 
