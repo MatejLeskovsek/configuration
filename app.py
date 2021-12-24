@@ -12,72 +12,81 @@ service_ip = "34.141.19.56:5000"
 microservices = [{"name":"database_core_service", "ip":"34.159.211.186:5000"},{"name":"ecostreet_core_service", "ip": "34.159.194.58:5000"}]
 
 # HOME PAGE
-@app.route("/")
+@app.route("/cf")
 def hello_world():
     return "Configuration server microservice."
 
 # FUNCTION TO UPDATE MS IP AND SEND NEW CONFIG TO OTHER MS
-@app.route('/update', methods = ['POST'])
+@app.route('/cfupdate', methods = ['POST'])
 def update():
     global microservices
     global service_ip
     global service_name
-    print("/update accessed")
+    print("/cfupdate accessed")
     try:
         microservice = request.form["name"]
         ms_ip = request.form["ip"]
-        ms_old = None
         change = False
         for ms in microservices:
             if ms["name"] == microservice and ms["ip"] == ms_ip:
-                ms_old = ms
-                continue
+                skip = True
             elif ms["name"] == microservice:
                 ms["ip"] = ms_ip
-                ms_old = ms
                 change = True
         if change:
             for ms in microservices:
-                url = 'http://' + ms["ip"] + '/config'
-                response = requests.post(url, data=ms)
+                if(ms["name"] == "database_core_service"):
+                    url = 'http://' + ms["ip"] + '/dbconfig'
+                    response = requests.post(url, data=ms)
+                else:
+                    url = 'http://' + ms["ip"] + '/lgconfig'
+                    response = requests.post(url, data=ms)
         return "200 OK"
     except Exception as err:
         return err
 
 # FUNCTION TO UPDATE CONFIGURATION MS 
-@app.route('/configupdate', methods = ['POST'])
+@app.route('/cfconfigupdate', methods = ['POST'])
 def config_update():
     global service_ip
     global microservices
     global service_name
-    print("/configupdate accessed")
+    print("/cfconfigupdate accessed")
     service_ip = request.form["ip"]
     try:
         for ms in microservices:
-            url = 'http://' + ms["ip"] + '/config'
-            response = requests.post(url, data=request.form)
-        return response.text
+            if(ms["name"] == "database_core_service"):
+                url = 'http://' + ms["ip"] + '/dbconfig'
+                response = requests.post(url, data=request.form)
+            else:
+                url = 'http://' + ms["ip"] + '/lgconfig'
+                response = requests.post(url, data=request.form)
+        return "200 OK"
     except Exception as err:
         return err
 
 # FUNCTION TO GET CURRENT CONFIG
-@app.route("/getconfig")
+@app.route("/cfgetconfig")
 def get_config():
     global service_ip
     global service_name
     global microservices
-    print("/getconfig accessed")
+    print("/cfgetconfig accessed")
     return str([service_name, service_ip, microservices])
 
 # METRICS FUNCTION
-@app.route("/metrics")
+@app.route("/cfmetrics")
 def get_health():
-    print("/metrics accessed")
+    print("/cfmetrics accessed")
     start = datetime.datetime.now()
     for ms in microservices:
         try:
-            url = 'http://' + ms["ip"] + '/config'
-            response = requests.get(url)
+            if(ms["name"] == "database_core_service"):
+                url = 'http://' + ms["ip"] + '/dbhealthcheck'
+                response = requests.get(url)
+            else:
+                url = 'http://' + ms["ip"] + '/lghealthcheck'
+                response = requests.get(url)
         except Exception as err:
             return "METRIC CHECK FAIL:" + ms["name"] + " unavailable"
     end = datetime.datetime.now()
@@ -88,7 +97,7 @@ def get_health():
     return str(health)
 
 # HEALTH CHECK
-@app.route("/healthcheck")
+@app.route("/cfhealthcheck")
 def send_health():
-    print("/healthcheck accessed")
+    print("/cfhealthcheck accessed")
     return "200 OK"
