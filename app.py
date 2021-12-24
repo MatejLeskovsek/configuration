@@ -19,20 +19,20 @@ service_ip = "34.96.72.77"
 microservices = [{"name":"database_core_service", "ip":"34.96.72.77"},{"name":"ecostreet_core_service", "ip": "34.96.72.77"}]
 
 class NoneSchema(Schema):
-        pass
+    response = fields.Str()
 
 # DEFAULT PAGE
 @app.route("/")
 @marshal_with(NoneSchema, description='200 OK', code=200)
 def health():
-    return "200", 200
+    return {"response": "200"}, 200
 docs.register(health)
 
 # HOME PAGE
 @app.route("/cf")
 @marshal_with(NoneSchema, description='200 OK', code=200)
 def hello_world():
-    return "Configuration server microservice.", 200
+    return {"response": "Configuration server microservice."}, 200
 docs.register(hello_world)
 
 # FUNCTION TO UPDATE MS IP AND SEND NEW CONFIG TO OTHER MS
@@ -63,9 +63,9 @@ def update():
                 else:
                     url = 'http://' + ms["ip"] + '/lgconfig'
                     response = requests.post(url, data=ms)
-        return "200 OK", 200
+        return {"response": "200 OK"}, 200
     except Exception as err:
-        return err, 500
+        return {"response": str(err)}, 500
 docs.register(update)
 
 # FUNCTION TO UPDATE CONFIGURATION MS 
@@ -87,9 +87,9 @@ def config_update():
             else:
                 url = 'http://' + ms["ip"] + '/lgconfig'
                 response = requests.post(url, data=request.form)
-        return "200 OK", 200
+        return {"response": "200 OK"}, 200
     except Exception as err:
-        return err, 500
+        return {"response": str(err)}, 500
 docs.register(config_update)
 
 # FUNCTION TO GET CURRENT CONFIG
@@ -100,7 +100,7 @@ def get_config():
     global service_name
     global microservices
     print("/cfgetconfig accessed")
-    return str([service_name, service_ip, microservices]), 200
+    return {"response": str([service_name, service_ip, microservices])}, 200
 docs.register(get_config)
 
 # METRICS FUNCTION
@@ -119,13 +119,13 @@ def get_health():
                 url = 'http://' + ms["ip"] + '/lghealthcheck'
                 response = requests.get(url)
         except Exception as err:
-            return "METRIC CHECK FAIL:" + ms["name"] + " unavailable", 500
+            return {"response": "METRIC CHECK FAIL:" + ms["name"] + " unavailable"}, 500
     end = datetime.datetime.now()
     
     delta = end-start
     crt = delta.total_seconds() * 1000
     health = {"metric check": "successful", "microservices response time (ms)": crt}
-    return str(health), 200
+    return {"response": str(health)}, 200
 docs.register(get_health)
 
 # HEALTH CHECK
@@ -133,5 +133,5 @@ docs.register(get_health)
 @marshal_with(NoneSchema, description='200 OK', code=200)
 def send_health():
     print("/cfhealthcheck accessed")
-    return "200 OK", 200
+    return {"response": "200 OK"}, 200
 docs.register(send_health)
