@@ -7,6 +7,7 @@ from webargs import fields
 from flask_apispec import use_kwargs, marshal_with
 from flask_apispec import FlaskApiSpec
 from marshmallow import Schema
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 app.config.update({
@@ -14,6 +15,7 @@ app.config.update({
     'APISPEC_SWAGGER_UI_URL': '/cfswaggerui'
 })
 docs = FlaskApiSpec(app, document_options=False)
+cors = CORS(app)
 service_name = "configuration_core_service"
 service_ip = "34.96.72.77"
 microservices = [{"name":"database_core_service", "ip":"34.96.72.77"},{"name":"ecostreet_core_service", "ip": "34.96.72.77"}]
