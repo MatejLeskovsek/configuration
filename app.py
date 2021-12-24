@@ -13,7 +13,7 @@ microservices = [{"name":"database_core_service", "ip":"34.159.211.186:5000"},{"
 
 # DEFAULT PAGE
 @app.route("/")
-def hello_world():
+def hello_microservices():
     return "EcoStreet microservices."
 
 # HOME PAGE
