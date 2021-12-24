@@ -14,7 +14,7 @@ microservices = [{"name":"database_core_service", "ip":"34.159.211.186:5000"},{"
 # DEFAULT PAGE
 @app.route("/")
 def health():
-    return 200
+    return "200"
 
 # HOME PAGE
 @app.route("/cf")
