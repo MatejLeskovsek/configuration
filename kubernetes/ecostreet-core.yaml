@@ -220,7 +220,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    test: readiness
+    test: liveness
   name: readiness-exec-cf
 spec:
   containers:
