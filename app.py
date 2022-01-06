@@ -135,5 +135,15 @@ docs.register(get_health)
 @marshal_with(NoneSchema, description='200 OK', code=200)
 def send_health():
     print("/cfhealthcheck accessed")
+    for ms in microservices:
+        try:
+            if(ms["name"] == "database_core_service"):
+                url = 'http://' + ms["ip"] + '/dbhealthcheck'
+                response = requests.get(url)
+            else:
+                url = 'http://' + ms["ip"] + '/lghealthcheck'
+                response = requests.get(url)
+        except Exception as err:
+            return {"response": "Healthcheck fail: depending services unavailable"}, 500
     return {"response": "200 OK"}, 200
 docs.register(send_health)
