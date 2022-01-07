@@ -166,8 +166,6 @@ spec:
     kind: Deployment
     name: configuration-core
 ---
-
----
 apiVersion: v1
 kind: Service
 metadata:
@@ -177,12 +175,9 @@ metadata:
   labels:
     app: configuration-core
     app.kubernetes.io/managed-by: gcp-cloud-build-deploy
-    app.kubernetes.io/name: ecostreet-core
-    app.kubernetes.io/version: 5dbe604a7c7955557751e45c6edb96c455176afb
+    app.kubernetes.io/name: configuration-core
   name: configuration-core-service
   namespace: ecostreet
-  resourceVersion: "43186"
-  uid: 5356af00-217d-4364-bd33-2e412dcd3c7d
 spec:
   clusterIP: 10.29.0.23
   clusterIPs:
