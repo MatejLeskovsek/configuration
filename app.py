@@ -37,7 +37,7 @@ def hello_world():
     return {"response": "Configuration server microservice."}, 200
 docs.register(hello_world)
 
-# FUNCTION TO UPDATE MS IP AND SEND NEW CONFIG TO OTHER MS
+# FUNCTION TO UPDATE MS IP AND SEND NEW CONFIG TO OTHER MS 
 @app.route('/cfupdate', methods = ['POST'])
 @use_kwargs({"name": fields.Str(), "ip": fields.Str()})
 @marshal_with(NoneSchema, description='200 OK', code=200)
