@@ -138,10 +138,10 @@ def send_health():
     for ms in microservices:
         try:
             if(ms["name"] == "database_core_service"):
-                url = 'http://' + ms["ip"] + '/dbhealthcheck'
+                url = 'http://' + ms["ip"] + '/db'
                 response = requests.get(url)
             else:
-                url = 'http://' + ms["ip"] + '/lghealthcheck'
+                url = 'http://' + ms["ip"] + '/lg'
                 response = requests.get(url)
         except Exception as err:
             return {"response": "Healthcheck fail: depending services unavailable"}, 500
