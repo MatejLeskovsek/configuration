@@ -225,6 +225,20 @@ spec:
             name: database-core-service
             port:
               number: 80
+      - path: /dbaddgame
+        pathType: Prefix
+        backend:
+          service:
+            name: database-core-service
+            port:
+              number: 80
+      - path: /dbremovegame
+        pathType: Prefix
+        backend:
+          service:
+            name: database-core-service
+            port:
+              number: 80
       - path: /dbupdate_ip
         pathType: Prefix
         backend:
@@ -359,6 +373,20 @@ spec:
             port:
               number: 80
       - path: /ad
+        pathType: Prefix
+        backend:
+          service:
+            name: admin-core-service
+            port:
+              number: 80
+      - path: /adaddgame
+        pathType: Prefix
+        backend:
+          service:
+            name: admin-core-service
+            port:
+              number: 80
+      - path: /adremovegame
         pathType: Prefix
         backend:
           service:
