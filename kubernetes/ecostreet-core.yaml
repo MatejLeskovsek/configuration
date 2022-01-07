@@ -171,17 +171,11 @@ kind: Service
 metadata:
   annotations:
     cloud.google.com/neg: '{"ingress":true}'
-  creationTimestamp: "2022-01-07T10:28:29Z"
   labels:
     app: configuration-core
-    app.kubernetes.io/managed-by: gcp-cloud-build-deploy
-    app.kubernetes.io/name: configuration-core
   name: configuration-core-service
   namespace: ecostreet
 spec:
-  clusterIP: 10.29.0.23
-  clusterIPs:
-    - 10.29.0.23
   externalTrafficPolicy: Cluster
   ports:
     - nodePort: 32677
