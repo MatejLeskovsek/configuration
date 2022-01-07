@@ -400,3 +400,45 @@ spec:
             name: admin-core-service
             port:
               number: 80
+      - path: /pl
+        pathType: Prefix
+        backend:
+          service:
+            name: play-core-service
+            port:
+              number: 80
+      - path: /plupdate_ip
+        pathType: Prefix
+        backend:
+          service:
+            name: play-core-service
+            port:
+              number: 80
+      - path: /plconfig
+        pathType: Prefix
+        backend:
+          service:
+            name: play-core-service
+            port:
+              number: 80
+      - path: /plgetconfig
+        pathType: Prefix
+        backend:
+          service:
+            name: play-core-service
+            port:
+              number: 80
+      - path: /plmetrics
+        pathType: Prefix
+        backend:
+          service:
+            name: play-core-service
+            port:
+              number: 80
+      - path: /plhealthcheck
+        pathType: Prefix
+        backend:
+          service:
+            name: play-core-service
+            port:
+              number: 80
