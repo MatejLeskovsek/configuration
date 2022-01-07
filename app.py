@@ -140,6 +140,12 @@ def send_health():
             if(ms["name"] == "database_core_service"):
                 url = 'http://' + ms["ip"] + '/db'
                 response = requests.get(url)
+            elif(ms["name"] == "ecostreet_core_service"):
+                url = 'http://' + ms["ip"] + '/db'
+                response = requests.get(url)
+            elif(ms["name"] == "admin_core_service"):
+                url = 'http://' + ms["ip"] + '/db'
+                response = requests.get(url)
             else:
                 url = 'http://' + ms["ip"] + '/lg'
                 response = requests.get(url)
