@@ -62,6 +62,12 @@ def update():
                 if(ms["name"] == "database_core_service"):
                     url = 'http://' + ms["ip"] + '/dbconfig'
                     response = requests.post(url, data=ms)
+                elif(ms["name"] == "admin_core_service"):
+                    url = 'http://' + ms["ip"] + '/adconfig'
+                    response = requests.post(url, data=request.form)
+                elif(ms["name"] == "play_core_service"):
+                    url = 'http://' + ms["ip"] + '/plconfig'
+                    response = requests.post(url, data=request.form)
                 else:
                     url = 'http://' + ms["ip"] + '/lgconfig'
                     response = requests.post(url, data=ms)
@@ -85,6 +91,12 @@ def config_update():
         for ms in microservices:
             if(ms["name"] == "database_core_service"):
                 url = 'http://' + ms["ip"] + '/dbconfig'
+                response = requests.post(url, data=request.form)
+            elif(ms["name"] == "admin_core_service"):
+                url = 'http://' + ms["ip"] + '/adconfig'
+                response = requests.post(url, data=request.form)
+            elif(ms["name"] == "play_core_service"):
+                url = 'http://' + ms["ip"] + '/plconfig'
                 response = requests.post(url, data=request.form)
             else:
                 url = 'http://' + ms["ip"] + '/lgconfig'
