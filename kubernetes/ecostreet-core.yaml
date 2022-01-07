@@ -97,7 +97,7 @@ spec:
         app: configuration-core
     spec:
       containers:
-        - image: gcr.io/quiet-era-332013/github.com/matejleskovsek/configuration
+        - image: gcr.io/synthetic-diode-337508/github.com/matejleskovsek/configuration
           imagePullPolicy: IfNotPresent
           name: configuration-sha256-1
           readinessProbe:
@@ -166,59 +166,27 @@ spec:
     kind: Deployment
     name: configuration-core
 ---
+
+---
 apiVersion: v1
 kind: Service
 metadata:
   annotations:
     cloud.google.com/neg: '{"ingress":true}'
-  finalizers:
-    - service.kubernetes.io/load-balancer-cleanup
+  creationTimestamp: "2022-01-07T10:28:29Z"
   labels:
     app: configuration-core
-  managedFields:
-    - apiVersion: v1
-      fieldsType: FieldsV1
-      fieldsV1:
-        'f:metadata':
-          'f:labels':
-            .: {}
-            'f:app': {}
-        'f:spec':
-          'f:externalTrafficPolicy': {}
-          'f:ports':
-            .: {}
-            'k:{"port":5000,"protocol":"TCP"}':
-              .: {}
-              'f:port': {}
-              'f:protocol': {}
-              'f:targetPort': {}
-          'f:selector':
-            .: {}
-            'f:app': {}
-          'f:sessionAffinity': {}
-          'f:type': {}
-      manager: GoogleCloudConsole
-      operation: Update
-      time: '2021-11-14T14:59:33Z'
-    - apiVersion: v1
-      fieldsType: FieldsV1
-      fieldsV1:
-        'f:metadata':
-          'f:finalizers':
-            .: {}
-            'v:"service.kubernetes.io/load-balancer-cleanup"': {}
-        'f:status':
-          'f:loadBalancer':
-            'f:ingress': {}
-      manager: kube-controller-manager
-      operation: Update
-      time: '2021-11-14T15:00:22Z'
+    app.kubernetes.io/managed-by: gcp-cloud-build-deploy
+    app.kubernetes.io/name: ecostreet-core
+    app.kubernetes.io/version: 5dbe604a7c7955557751e45c6edb96c455176afb
   name: configuration-core-service
   namespace: ecostreet
+  resourceVersion: "43186"
+  uid: 5356af00-217d-4364-bd33-2e412dcd3c7d
 spec:
-  clusterIP: 10.40.1.20
+  clusterIP: 10.29.0.23
   clusterIPs:
-    - 10.40.1.20
+    - 10.29.0.23
   externalTrafficPolicy: Cluster
   ports:
     - nodePort: 32677
@@ -226,6 +194,6 @@ spec:
       protocol: TCP
       targetPort: 5000
   selector:
-    app: configuration-core
+    app: database-core
   sessionAffinity: None
-  type: LoadBalancer
+  type: NodePort
