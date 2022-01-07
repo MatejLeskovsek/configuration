@@ -225,6 +225,13 @@ spec:
             name: database-core-service
             port:
               number: 80
+      - path: /dbgetgames
+        pathType: Prefix
+        backend:
+          service:
+            name: database-core-service
+            port:
+              number: 80
       - path: /dbaddgame
         pathType: Prefix
         backend:
