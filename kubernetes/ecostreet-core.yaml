@@ -379,13 +379,6 @@ spec:
             name: admin-core-service
             port:
               number: 80
-      - path: /cfgetconfig
-        pathType: Prefix
-        backend:
-          service:
-            name: admin-core-service
-            port:
-              number: 80
       - path: /adgetconfig
         pathType: Prefix
         backend:
