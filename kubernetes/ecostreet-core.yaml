@@ -182,7 +182,7 @@ spec:
       protocol: TCP
       targetPort: 5000
   selector:
-    app: database-core
+    app: configuration-core
   sessionAffinity: None
   type: NodePort
 ---
