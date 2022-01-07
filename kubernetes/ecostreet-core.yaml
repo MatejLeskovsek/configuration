@@ -358,3 +358,52 @@ spec:
             name: configuration-core-service
             port:
               number: 80
+      - path: /ad
+        pathType: Prefix
+        backend:
+          service:
+            name: admin-core-service
+            port:
+              number: 80
+      - path: /adupdate_ip
+        pathType: Prefix
+        backend:
+          service:
+            name: admin-core-service
+            port:
+              number: 80
+      - path: /adconfig
+        pathType: Prefix
+        backend:
+          service:
+            name: admin-core-service
+            port:
+              number: 80
+      - path: /cfgetconfig
+        pathType: Prefix
+        backend:
+          service:
+            name: admin-core-service
+            port:
+              number: 80
+      - path: /adgetconfig
+        pathType: Prefix
+        backend:
+          service:
+            name: admin-core-service
+            port:
+              number: 80
+      - path: /admetrics
+        pathType: Prefix
+        backend:
+          service:
+            name: admin-core-service
+            port:
+              number: 80
+      - path: /adhealthcheck
+        pathType: Prefix
+        backend:
+          service:
+            name: admin-core-service
+            port:
+              number: 80
