@@ -17,8 +17,8 @@ app.config.update({
 docs = FlaskApiSpec(app, document_options=False)
 cors = CORS(app)
 service_name = "configuration_core_service"
-service_ip = "34.96.72.77"
-microservices = [{"name":"database_core_service", "ip":"34.96.72.77"},{"name":"ecostreet_core_service", "ip": "34.96.72.77"}]
+service_ip = "35.190.119.123"
+microservices = [{"name":"database_core_service", "ip":"35.190.119.123"},{"name":"ecostreet_core_service", "ip": "35.190.119.123"}]
 
 class NoneSchema(Schema):
     response = fields.Str()

@@ -185,3 +185,176 @@ spec:
     app: database-core
   sessionAffinity: None
   type: NodePort
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minimal-ingress
+  namespace: ecostreet
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: configuration-core-service
+            port:
+              number: 80
+      - path: /db
+        pathType: Prefix
+        backend:
+          service:
+            name: database-core-service
+            port:
+              number: 80
+      - path: /dblogin
+        pathType: Prefix
+        backend:
+          service:
+            name: database-core-service
+            port:
+              number: 80
+      - path: /dbauthenticate
+        pathType: Prefix
+        backend:
+          service:
+            name: database-core-service
+            port:
+              number: 80
+      - path: /dbupdate_ip
+        pathType: Prefix
+        backend:
+          service:
+            name: database-core-service
+            port:
+              number: 80
+      - path: /dbconfig
+        pathType: Prefix
+        backend:
+          service:
+            name: database-core-service
+            port:
+              number: 80
+      - path: /dbgetconfig
+        pathType: Prefix
+        backend:
+          service:
+            name: database-core-service
+            port:
+              number: 80
+      - path: /dbmetrics
+        pathType: Prefix
+        backend:
+          service:
+            name: database-core-service
+            port:
+              number: 80
+      - path: /dbhealthcheck
+        pathType: Prefix
+        backend:
+          service:
+            name: database-core-service
+            port:
+              number: 80
+      - path: /lg
+        pathType: Prefix
+        backend:
+          service:
+            name: ecostreet-core-service
+            port:
+              number: 80
+      - path: /lglogin
+        pathType: Prefix
+        backend:
+          service:
+            name: ecostreet-core-service
+            port:
+              number: 80
+      - path: /lgcommand
+        pathType: Prefix
+        backend:
+          service:
+            name: ecostreet-core-service
+            port:
+              number: 80
+      - path: /lgupdate_ip
+        pathType: Prefix
+        backend:
+          service:
+            name: ecostreet-core-service
+            port:
+              number: 80
+      - path: /lgconfig
+        pathType: Prefix
+        backend:
+          service:
+            name: ecostreet-core-service
+            port:
+              number: 80
+      - path: /lggetconfig
+        pathType: Prefix
+        backend:
+          service:
+            name: ecostreet-core-service
+            port:
+              number: 80
+      - path: /lgmetrics
+        pathType: Prefix
+        backend:
+          service:
+            name: ecostreet-core-service
+            port:
+              number: 80
+      - path: /lghealthcheck
+        pathType: Prefix
+        backend:
+          service:
+            name: ecostreet-core-service
+            port:
+              number: 80
+      - path: /cf
+        pathType: Prefix
+        backend:
+          service:
+            name: configuration-core-service
+            port:
+              number: 80
+      - path: /cfupdate
+        pathType: Prefix
+        backend:
+          service:
+            name: configuration-core-service
+            port:
+              number: 80
+      - path: /cfconfigupdate
+        pathType: Prefix
+        backend:
+          service:
+            name: configuration-core-service
+            port:
+              number: 80
+      - path: /cfgetconfig
+        pathType: Prefix
+        backend:
+          service:
+            name: configuration-core-service
+            port:
+              number: 80
+      - path: /cfmetrics
+        pathType: Prefix
+        backend:
+          service:
+            name: configuration-core-service
+            port:
+              number: 80
+      - path: /cfhealthcheck
+        pathType: Prefix
+        backend:
+          service:
+            name: configuration-core-service
+            port:
+              number: 80
