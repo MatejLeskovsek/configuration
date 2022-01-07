@@ -23,7 +23,7 @@ microservices = [{"name":"database_core_service", "ip":"database-core-service"},
 class NoneSchema(Schema):
     response = fields.Str()
 
-# DEFAULT PAGE
+# DEFAULT PAGE 
 @app.route("/")
 @marshal_with(NoneSchema, description='200 OK', code=200)
 def health():
