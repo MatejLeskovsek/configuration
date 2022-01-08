@@ -83,7 +83,7 @@ def update():
                     pl_change = response.text
                 if(name == "ecostreet_core_service" and microservice != "ecostreet_core_service"):
                     url = 'http://' + str(ms["ip"]) + '/lgconfig'
-                    response = requests.post(url, data=request.form)
+                    response = requests.post(url, data={"name": microservice, "ip": ms_ip})
                     lg_change = response.text
         return {"response": [change, db_change,ad_change,pl_change,lg_change]}, 200
     except Exception as err:
