@@ -95,13 +95,14 @@ def config_update():
     service_ip = request.form["ip"]
     try:
         for ms in microservices:
-            if(ms["name"] == "database_core_service"):
+            name = str(ms["name"])
+            if(name == "database_core_service"):
                 url = 'http://' + ms["ip"] + '/dbconfig'
                 response = requests.post(url, data=request.form)
-            elif(ms["name"] == "admin_core_service"):
+            elif(name == "admin_core_service"):
                 url = 'http://' + ms["ip"] + '/adconfig'
                 response = requests.post(url, data=request.form)
-            elif(ms["name"] == "play_core_service"):
+            elif(name == "play_core_service"):
                 url = 'http://' + ms["ip"] + '/plconfig'
                 response = requests.post(url, data=request.form)
             else:
@@ -132,14 +133,15 @@ def get_health():
     start = datetime.datetime.now()
     for ms in microservices:
         try:
-            if(ms["name"] == "database_core_service"):
+            name = ms["name"]
+            if(name == "database_core_service"):
                 url = 'http://' + ms["ip"] + '/dbhealthcheck'
                 response = requests.get(url)
             else:
                 url = 'http://' + ms["ip"] + '/lghealthcheck'
                 response = requests.get(url)
         except Exception as err:
-            return {"response": "METRIC CHECK FAIL:" + ms["name"] + " unavailable"}, 500
+            return {"response": "METRIC CHECK FAIL:" + name + " unavailable"}, 500
     end = datetime.datetime.now()
     
     delta = end-start
@@ -155,13 +157,14 @@ def send_health():
     sys.stdout.write("Configuration microservice: /cfhealthcheck accessed\n")
     for ms in microservices:
         try:
-            if(ms["name"] == "database_core_service"):
+            name = ms["name"]
+            if(name == "database_core_service"):
                 url = 'http://' + ms["ip"] + '/db'
                 response = requests.get(url)
-            elif(ms["name"] == "ecostreet_core_service"):
+            elif(name == "ecostreet_core_service"):
                 url = 'http://' + ms["ip"] + '/lg'
                 response = requests.get(url)
-            elif(ms["name"] == "admin_core_service"):
+            elif(name == "admin_core_service"):
                 url = 'http://' + ms["ip"] + '/ad'
                 response = requests.get(url)
             else:
