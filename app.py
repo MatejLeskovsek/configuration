@@ -65,16 +65,16 @@ def update():
         if change:
             for ms in microservices:
                 name = str(ms["name"])
-                if(name == "database_core_service"):
+                if(name == "database_core_service" and microservice != "database_core_service"):
                     url = 'http://' + str(ms["ip"]) + '/dbconfig'
                     response = requests.post(url, data=request.form)
-                if(name == "admin_core_service"):
+                if(name == "admin_core_service" and microservice != "admin_core_service"):
                     url = 'http://' + str(ms["ip"]) + '/adconfig'
                     response = requests.post(url, data=request.form)
-                if(name == "play_core_service"):
+                if(name == "play_core_service" and microservice != "play_core_service"):
                     url = 'http://' + str(ms["ip"]) + '/plconfig'
                     response = requests.post(url, data=request.form)
-                if(name == "ecostreet_core_service"):
+                if(name == "ecostreet_core_service" and microservice != "ecostreet_core_service"):
                     url = 'http://' + str(ms["ip"]) + '/lgconfig'
                     response = requests.post(url, data=ms)
         return {"response": "200 OK"}, 200
