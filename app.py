@@ -57,29 +57,28 @@ def update():
         microservice = request.form["name"]
         ms_ip = request.form["ip"]
         change = False
+        old_ms = None
         for ms in microservices:
             if str(ms["name"]) == str(microservice):
+                old_ms = ms["ip"]
+                ms["ip"] = ms_ip
                 change = True
                 break
         if change:
             for ms in microservices:
                 name = str(ms["name"])
                 if(name == "database_core_service"):
-                    url = 'http://' + ms["ip"] + '/dbconfig'
+                    url = 'http://' + str(old_ms) + '/dbconfig'
                     response = requests.post(url, data=request.form)
                 elif(name == "admin_core_service"):
-                    url = 'http://' + ms["ip"] + '/adconfig'
+                    url = 'http://' + str(ms["ip"]) + '/adconfig'
                     response = requests.post(url, data=request.form)
                 elif(name == "play_core_service"):
-                    url = 'http://' + ms["ip"] + '/plconfig'
+                    url = 'http://' + str(ms["ip"]) + '/plconfig'
                     response = requests.post(url, data=request.form)
                 else:
-                    url = 'http://' + ms["ip"] + '/lgconfig'
+                    url = 'http://' + str(ms["ip"]) + '/lgconfig'
                     response = requests.post(url, data=ms)
-        for ms in microservices:
-            if str(ms["name"]) == str(microservice):
-                ms["ip"] = ms_ip
-                break
         return {"response": "200 OK"}, 200
     except Exception as err:
         return {"response": str(err)}, 500
