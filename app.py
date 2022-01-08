@@ -24,6 +24,10 @@ microservices = [{"name":"database_core_service", "ip":"database-core-service"},
 class NoneSchema(Schema):
     response = fields.Str()
 
+@app.errorhandler(404)
+def not_found(e):
+    return "The API call was not accepted."
+
 # DEFAULT PAGE 
 @app.route("/")
 @marshal_with(NoneSchema, description='200 OK', code=200)
