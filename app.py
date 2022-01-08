@@ -63,6 +63,7 @@ def update():
             elif ms["name"] == microservice:
                 ms["ip"] = ms_ip
                 change = True
+                break
         if change:
             for ms in microservices:
                 if(ms["name"] == "database_core_service"):
