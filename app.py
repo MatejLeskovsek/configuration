@@ -8,6 +8,7 @@ from flask_apispec import use_kwargs, marshal_with
 from flask_apispec import FlaskApiSpec
 from marshmallow import Schema
 from flask_cors import CORS, cross_origin
+import sys
 
 app = Flask(__name__)
 app.config.update({
@@ -46,7 +47,7 @@ def update():
     global microservices
     global service_ip
     global service_name
-    print("/cfupdate accessed")
+    sys.stdout.write("Configuration microservice: /cfupdate accessed\n")
     try:
         microservice = request.form["name"]
         ms_ip = request.form["ip"]
@@ -85,7 +86,7 @@ def config_update():
     global service_ip
     global microservices
     global service_name
-    print("/cfconfigupdate accessed")
+    sys.stdout.write("Configuration microservice: /cfconfigupdate accessed\n")
     service_ip = request.form["ip"]
     try:
         for ms in microservices:
@@ -113,7 +114,7 @@ def get_config():
     global service_ip
     global service_name
     global microservices
-    print("/cfgetconfig accessed")
+    sys.stdout.write("Configuration microservice: /cfgetconfig accessed\n")
     return {"response": str([service_name, service_ip, microservices])}, 200
 docs.register(get_config)
 
@@ -122,7 +123,7 @@ docs.register(get_config)
 @marshal_with(NoneSchema, description='200 OK', code=200)
 @marshal_with(NoneSchema, description='METRIC CHECK FAIL', code=500)
 def get_health():
-    print("/cfmetrics accessed")
+    sys.stdout.write("Configuration microservice: /cfmetrics accessed\n")
     start = datetime.datetime.now()
     for ms in microservices:
         try:
@@ -146,7 +147,7 @@ docs.register(get_health)
 @app.route("/cfhealthcheck")
 @marshal_with(NoneSchema, description='200 OK', code=200)
 def send_health():
-    print("/cfhealthcheck accessed")
+    sys.stdout.write("Configuration microservice: /cfhealthcheck accessed\n")
     for ms in microservices:
         try:
             if(ms["name"] == "database_core_service"):
