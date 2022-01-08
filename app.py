@@ -24,9 +24,10 @@ microservices = [{"name":"database_core_service", "ip":"database-core-service"},
 class NoneSchema(Schema):
     response = fields.Str()
 
+# FALLBACK
 @app.errorhandler(404)
 def not_found(e):
-    return "The API call was not accepted."
+    return "The API call destination was not found.", 404
 
 # DEFAULT PAGE 
 @app.route("/")
