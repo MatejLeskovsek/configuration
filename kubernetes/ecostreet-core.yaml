@@ -477,3 +477,73 @@ spec:
             name: play-core-service
             port:
               number: 80
+      - path: /cfopenapi
+        pathType: Prefix
+        backend:
+          service:
+            name: configuration-core-service
+            port:
+              number: 80
+      - path: /cfswaggerui
+        pathType: Prefix
+        backend:
+          service:
+            name: configuration-core-service
+            port:
+              number: 80
+      - path: /dbopenapi
+        pathType: Prefix
+        backend:
+          service:
+            name: database-core-service
+            port:
+              number: 80
+      - path: /dbswaggerui
+        pathType: Prefix
+        backend:
+          service:
+            name: database-core-service
+            port:
+              number: 80
+      - path: /lgopenapi
+        pathType: Prefix
+        backend:
+          service:
+            name: login-core-service
+            port:
+              number: 80
+      - path: /lgswaggerui
+        pathType: Prefix
+        backend:
+          service:
+            name: login-core-service
+            port:
+              number: 80
+      - path: /adopenapi
+        pathType: Prefix
+        backend:
+          service:
+            name: admin-core-service
+            port:
+              number: 80
+      - path: /adswaggerui
+        pathType: Prefix
+        backend:
+          service:
+            name: admin-core-service
+            port:
+              number: 80
+      - path: /plopenapi
+        pathType: Prefix
+        backend:
+          service:
+            name: play-core-service
+            port:
+              number: 80
+      - path: /plswaggerui
+        pathType: Prefix
+        backend:
+          service:
+            name: play-core-service
+            port:
+              number: 80
