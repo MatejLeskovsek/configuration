@@ -509,14 +509,14 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: login-core-service
+            name: ecostreet-core-service
             port:
               number: 80
       - path: /lgswaggerui
         pathType: Prefix
         backend:
           service:
-            name: login-core-service
+            name: ecostreet-core-service
             port:
               number: 80
       - path: /adopenapi
