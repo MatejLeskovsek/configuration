@@ -57,6 +57,10 @@ def update():
         microservice = str(request.form["name"])
         ms_ip = str(request.form["ip"])
         change = False
+        db_change = False
+        ad_change = False
+        pl_change = False
+        lg_change = False
         for ms in microservices:
             if str(ms["name"]) == str(microservice):
                 ms["ip"] = ms_ip
@@ -68,16 +72,20 @@ def update():
                 if(name == "database_core_service" and microservice != "database_core_service"):
                     url = 'http://' + str(ms["ip"]) + '/dbconfig'
                     response = requests.post(url, data=request.form)
+                    db_change = True
                 if(name == "admin_core_service" and microservice != "admin_core_service"):
                     url = 'http://' + str(ms["ip"]) + '/adconfig'
                     response = requests.post(url, data=request.form)
+                    ad_change = True
                 if(name == "play_core_service" and microservice != "play_core_service"):
                     url = 'http://' + str(ms["ip"]) + '/plconfig'
                     response = requests.post(url, data=request.form)
+                    pl_change = True
                 if(name == "ecostreet_core_service" and microservice != "ecostreet_core_service"):
                     url = 'http://' + str(ms["ip"]) + '/lgconfig'
                     response = requests.post(url, data=ms)
-        return {"response": "200 OK"}, 200
+                    lg_change = True
+        return {"response": [change, db_change,ad_change,pl_change,lg_change]}, 200
     except Exception as err:
         return {"response": str(err)}, 500
 docs.register(update)
