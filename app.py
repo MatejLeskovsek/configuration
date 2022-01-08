@@ -71,15 +71,15 @@ def update():
                 name = str(ms["name"])
                 if(name == "database_core_service" and microservice != "database_core_service"):
                     url = 'http://' + str(ms["ip"]) + '/dbconfig'
-                    response = requests.post(url, data=request.form)
+                    response = requests.post(url, data={"name": microservice, "ip": ms_ip})
                     db_change = response.text
                 if(name == "admin_core_service" and microservice != "admin_core_service"):
                     url = 'http://' + str(ms["ip"]) + '/adconfig'
-                    response = requests.post(url, data=request.form)
+                    response = requests.post(url, data={"name": microservice, "ip": ms_ip})
                     ad_change = response.text
                 if(name == "play_core_service" and microservice != "play_core_service"):
                     url = 'http://' + str(ms["ip"]) + '/plconfig'
-                    response = requests.post(url, data=request.form)
+                    response = requests.post(url, data={"name": microservice, "ip": ms_ip})
                     pl_change = response.text
                 if(name == "ecostreet_core_service" and microservice != "ecostreet_core_service"):
                     url = 'http://' + str(ms["ip"]) + '/lgconfig'
