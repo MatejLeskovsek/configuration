@@ -59,7 +59,6 @@ def update():
         change = False
         for ms in microservices:
             if str(ms["name"]) == str(microservice):
-                ms["ip"] = ms_ip
                 change = True
                 break
         if change:
@@ -67,7 +66,7 @@ def update():
                 name = str(ms["name"])
                 if(name == "database_core_service"):
                     url = 'http://' + ms["ip"] + '/dbconfig'
-                    response = requests.post(url, data=ms)
+                    response = requests.post(url, data=request.form)
                 elif(name == "admin_core_service"):
                     url = 'http://' + ms["ip"] + '/adconfig'
                     response = requests.post(url, data=request.form)
@@ -77,6 +76,10 @@ def update():
                 else:
                     url = 'http://' + ms["ip"] + '/lgconfig'
                     response = requests.post(url, data=ms)
+        for ms in microservices:
+            if str(ms["name"]) == str(microservice):
+                ms["ip"] = ms_ip
+                break
         return {"response": "200 OK"}, 200
     except Exception as err:
         return {"response": str(err)}, 500
