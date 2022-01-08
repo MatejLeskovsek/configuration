@@ -68,13 +68,13 @@ def update():
                 if(name == "database_core_service"):
                     url = 'http://' + str(ms["ip"]) + '/dbconfig'
                     response = requests.post(url, data=request.form)
-                elif(name == "admin_core_service"):
+                if(name == "admin_core_service"):
                     url = 'http://' + str(ms["ip"]) + '/adconfig'
                     response = requests.post(url, data=request.form)
-                elif(name == "play_core_service"):
+                if(name == "play_core_service"):
                     url = 'http://' + str(ms["ip"]) + '/plconfig'
                     response = requests.post(url, data=request.form)
-                else:
+                if(name == "ecostreet_core_service"):
                     url = 'http://' + str(ms["ip"]) + '/lgconfig'
                     response = requests.post(url, data=ms)
         return {"response": "200 OK"}, 200
