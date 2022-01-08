@@ -54,8 +54,8 @@ def update():
     global service_name
     sys.stdout.write("Configuration microservice: /cfupdate accessed\n")
     try:
-        microservice = request.form["name"]
-        ms_ip = request.form["ip"]
+        microservice = str(request.form["name"])
+        ms_ip = str(request.form["ip"])
         change = False
         for ms in microservices:
             if str(ms["name"]) == str(microservice):
