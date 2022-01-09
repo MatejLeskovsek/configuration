@@ -13,6 +13,8 @@ import time
 import logging
 import socket
 from logging.handlers import SysLogHandler
+from circuitbreaker import circuit
+import random
 
 app = Flask(__name__)
 app.config.update({
@@ -49,28 +51,26 @@ def not_found(e):
     logger.info("Configuration microservice: /fallback accessed - error: " + str(e))
     return "The API call destination was not found.", 404
 
+
 # CIRCUIT BREAKER DEMO BAD
-@app.route("/cfdemobad")
+@app.route("/cfdemo")
 @marshal_with(NoneSchema, description='200 OK', code=200)
+@circuit(failure_threshold=1, recovery_timeout=10, fallback_function=not_found("circuit_break"))
 def cb_demo_bad():
     logger.info("Configuration microservice: /dfdemobad accessed\n")
-    time.sleep(40)
-    logger.info("Configuration microservice: /cfdemobad finished\n")
-    return {"response": "200"}, 200
+    die = bool(random.getrandbits(1))
+    if(die):
+        time.sleep(5)
+        raise ValueError('A very specific bad thing happened.')
+    else:
+        logger.info("Configuration microservice: /cfdemobad finished\n")
+        return {"response": "200"}, 200
 docs.register(cb_demo_bad)
-
-# CIRCUIT BREAKER DEMO GOOD
-@app.route("/cfdemogood")
-@marshal_with(NoneSchema, description='200 OK', code=200)
-def cb_demo_good():
-    logger.info("Configuration microservice: /dfdemogood accessed\n")
-    logger.info("Configuration microservice: /cfdemogood finished\n")
-    return {"response": "200"}, 200
-docs.register(cb_demo_good)
 
 # DEFAULT PAGE 
 @app.route("/")
 @marshal_with(NoneSchema, description='200 OK', code=200)
+@circuit(failure_threshold=1, recovery_timeout=10, fallback_function=not_found("circuit_break"))
 def health():
     return {"response": "200"}, 200
 docs.register(health)
@@ -78,6 +78,7 @@ docs.register(health)
 # HOME PAGE
 @app.route("/cf")
 @marshal_with(NoneSchema, description='200 OK', code=200)
+@circuit(failure_threshold=1, recovery_timeout=10, fallback_function=not_found("circuit_break"))
 def hello_world():
     return {"response": "Configuration server microservice."}, 200
 docs.register(hello_world)
@@ -87,6 +88,7 @@ docs.register(hello_world)
 @use_kwargs({"name": fields.Str(), "ip": fields.Str()})
 @marshal_with(NoneSchema, description='200 OK', code=200)
 @marshal_with(NoneSchema, description='INTERNAL SERVER ERROR', code=500)
+@circuit(failure_threshold=1, recovery_timeout=10, fallback_function=not_found("circuit_break"))
 def update():
     global microservices
     global service_ip
@@ -136,6 +138,7 @@ docs.register(update)
 @use_kwargs({'name': fields.Str(), 'ip': fields.Str()})
 @marshal_with(NoneSchema, description='200 OK', code=200)
 @marshal_with(NoneSchema, description='INTERNAL SERVER ERROR', code=500)
+@circuit(failure_threshold=1, recovery_timeout=10, fallback_function=not_found("circuit_break"))
 def config_update():
     global service_ip
     global microservices
@@ -167,6 +170,7 @@ docs.register(config_update)
 # FUNCTION TO GET CURRENT CONFIG
 @app.route("/cfgetconfig")
 @marshal_with(NoneSchema, description='200 OK', code=200)
+@circuit(failure_threshold=1, recovery_timeout=10, fallback_function=not_found("circuit_break"))
 def get_config():
     global service_ip
     global service_name
@@ -180,6 +184,7 @@ docs.register(get_config)
 @app.route("/cfmetrics")
 @marshal_with(NoneSchema, description='200 OK', code=200)
 @marshal_with(NoneSchema, description='METRIC CHECK FAIL', code=500)
+@circuit(failure_threshold=1, recovery_timeout=10, fallback_function=not_found("circuit_break"))
 def get_health():
     logger.info("Configuration microservice: /cfmetrics accessed\n")
     start = datetime.datetime.now()
@@ -207,6 +212,7 @@ docs.register(get_health)
 # HEALTH CHECK
 @app.route("/cfhealthcheck")
 @marshal_with(NoneSchema, description='200 OK', code=200)
+@circuit(failure_threshold=1, recovery_timeout=10, fallback_function=not_found("circuit_break"))
 def send_health():
     logger.info("Configuration microservice: /cfhealthcheck accessed\n")
     for ms in microservices:

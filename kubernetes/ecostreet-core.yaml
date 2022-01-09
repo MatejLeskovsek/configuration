@@ -351,13 +351,6 @@ spec:
             name: configuration-core-service
             port:
               number: 80
-      - path: /cfdemogood
-        pathType: Prefix
-        backend:
-          service:
-            name: configuration-core-service
-            port:
-              number: 80
       - path: /cfupdate
         pathType: Prefix
         backend:
