@@ -46,6 +46,7 @@ class NoneSchema(Schema):
 # FALLBACK
 @app.errorhandler(404)
 def not_found(e):
+    logger.info("Configuration microservice: /fallback accessed!\n")
     return "The API call destination was not found.", 404
 
 # DEFAULT PAGE 
