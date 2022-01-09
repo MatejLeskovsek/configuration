@@ -9,7 +9,7 @@ from flask_apispec import FlaskApiSpec
 from marshmallow import Schema
 from flask_cors import CORS, cross_origin
 import sys
-
+import time
 import logging
 import socket
 from logging.handlers import SysLogHandler
@@ -48,6 +48,25 @@ class NoneSchema(Schema):
 def not_found(e):
     logger.info("Configuration microservice: /fallback accessed - error: " + str(e))
     return "The API call destination was not found.", 404
+
+# CIRCUIT BREAKER DEMO BAD
+@app.route("/cfcbdemobad")
+@marshal_with(NoneSchema, description='200 OK', code=200)
+def cb_demo_bad():
+    logger.info("Configuration microservice: /dfdemobad accessed\n")
+    time.sleep(40)
+    logger.info("Configuration microservice: /cfdemobad finished\n")
+    return {"response": "200"}, 200
+docs.register(cb_demo_bad)
+
+# CIRCUIT BREAKER DEMO GOOD
+@app.route("/cfcbdemogood")
+@marshal_with(NoneSchema, description='200 OK', code=200)
+def cb_demo_good():
+    logger.info("Configuration microservice: /dfdemogood accessed\n")
+    logger.info("Configuration microservice: /cfdemogood finished\n")
+    return {"response": "200"}, 200
+docs.register(cb_demo_good)
 
 # DEFAULT PAGE 
 @app.route("/")
