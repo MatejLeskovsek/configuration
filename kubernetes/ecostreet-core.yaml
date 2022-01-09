@@ -442,6 +442,13 @@ spec:
             name: play-core-service
             port:
               number: 80
+      - path: /plgetgames
+        pathType: Prefix
+        backend:
+          service:
+            name: play-core-service
+            port:
+              number: 80
       - path: /plupdate_ip
         pathType: Prefix
         backend:
