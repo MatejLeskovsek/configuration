@@ -512,6 +512,13 @@ spec:
             name: database-core-service
             port:
               number: 80
+      - path: /dbleavegame
+        pathType: Prefix
+        backend:
+          service:
+            name: database-core-service
+            port:
+              number: 80
       - path: /dbswaggerui
         pathType: Prefix
         backend:
