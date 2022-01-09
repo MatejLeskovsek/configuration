@@ -43,7 +43,7 @@ logger.setLevel(logging.INFO)
 class NoneSchema(Schema):
     response = fields.Str()
 
-# FALLBACK 
+# FALLBACK
 @app.errorhandler(404)
 def not_found(e):
     logger.info("Configuration microservice: /fallback accessed - error: " + str(e))
