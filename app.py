@@ -50,7 +50,7 @@ def not_found(e):
     return "The API call destination was not found.", 404
 
 # CIRCUIT BREAKER DEMO BAD
-@app.route("/cfcbdemobad")
+@app.route("/cfdemobad")
 @marshal_with(NoneSchema, description='200 OK', code=200)
 def cb_demo_bad():
     logger.info("Configuration microservice: /dfdemobad accessed\n")
@@ -60,7 +60,7 @@ def cb_demo_bad():
 docs.register(cb_demo_bad)
 
 # CIRCUIT BREAKER DEMO GOOD
-@app.route("/cfcbdemogood")
+@app.route("/cfdemogood")
 @marshal_with(NoneSchema, description='200 OK', code=200)
 def cb_demo_good():
     logger.info("Configuration microservice: /dfdemogood accessed\n")
