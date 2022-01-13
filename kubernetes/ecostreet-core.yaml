@@ -449,6 +449,13 @@ spec:
             name: play-core-service
             port:
               number: 80
+      - path: /plgetholidays
+        pathType: Prefix
+        backend:
+          service:
+            name: play-core-service
+            port:
+              number: 80
       - path: /plgetgames
         pathType: Prefix
         backend:

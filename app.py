@@ -55,9 +55,9 @@ def not_found(e):
 # CIRCUIT BREAKER DEMO BAD
 @app.route("/cfdemo")
 @marshal_with(NoneSchema, description='200 OK', code=200)
-@circuit(failure_threshold=1, recovery_timeout=10, fallback_function=not_found("circuit_break"))
+@circuit(failure_threshold=1, recovery_timeout=5, fallback_function=not_found("circuit_break"))
 def cb_demo_bad():
-    logger.info("Configuration microservice: /dfdemobad accessed\n")
+    logger.info("Configuration microservice: /cfdemobad accessed\n")
     die = bool(random.getrandbits(1))
     if(die):
         time.sleep(5)
