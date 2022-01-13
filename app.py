@@ -84,7 +84,7 @@ def hello_world():
 docs.register(hello_world)
 
 # FUNCTION TO UPDATE MS IP AND SEND NEW CONFIG TO OTHER MS 
-@app.route('/cfupdate', methods = ['POST'])
+@app.route('/cfupdate', methods = ['PUT'])
 @use_kwargs({"name": fields.Str(), "ip": fields.Str()})
 @marshal_with(NoneSchema, description='200 OK', code=200)
 @marshal_with(NoneSchema, description='INTERNAL SERVER ERROR', code=500)
@@ -134,7 +134,7 @@ def update():
 docs.register(update)
 
 # FUNCTION TO UPDATE CONFIGURATION MS 
-@app.route('/cfconfigupdate', methods = ['POST'])
+@app.route('/cfconfigupdate', methods = ['PUT'])
 @use_kwargs({'name': fields.Str(), 'ip': fields.Str()})
 @marshal_with(NoneSchema, description='200 OK', code=200)
 @marshal_with(NoneSchema, description='INTERNAL SERVER ERROR', code=500)
