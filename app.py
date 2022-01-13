@@ -48,14 +48,18 @@ class NoneSchema(Schema):
 # FALLBACK
 @app.errorhandler(404)
 def not_found(e):
-    logger.info("Configuration microservice: /fallback accessed - error: " + str(e))
+    logger.info("Configuration microservice: 404 fallback accessed - error: " + str(e))
     return "The API call destination was not found.", 404
 
+
+def fallback_circuit():
+    logger.info("Configuration microservice: Circuit breaker fallback accessed")
+    return "The service is temporarily unavailable.", 500
 
 # CIRCUIT BREAKER DEMO BAD
 @app.route("/cfdemo")
 @marshal_with(NoneSchema, description='200 OK', code=200)
-@circuit(failure_threshold=1, recovery_timeout=5, fallback_function=not_found("circuit_break"))
+@circuit(failure_threshold=1, recovery_timeout=5, fallback_function=fallback_circuit)
 def cb_demo_bad():
     logger.info("Configuration microservice: /cfdemobad accessed\n")
     die = bool(random.getrandbits(1))
